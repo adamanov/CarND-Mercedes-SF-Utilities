@@ -1,6 +1,8 @@
 # SFND Radar Target Generation and Detection
 ## [Rubric](https://review.udacity.com/#!/rubrics/2548/view) Points
 ---
+Description of radar-target-generation-and-detection.m file. The project was done during Nanodegree on Sensor Fusion.
+
 #### 1. FMCW Waveform Design
 
 Using the given system requirements, design a FMCW waveform. Find its Bandwidth (B), chirp time (Tchirp) and slope of the chirp.
