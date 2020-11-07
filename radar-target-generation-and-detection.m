@@ -1,5 +1,6 @@
 clear all
 clc;
+close all;
 
 %% Radar Specifications 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,8 +55,6 @@ Nr=1024;                  %for length of time OR # of range cells
 % Timestamp for running the displacement scenario for every sample on each
 % chirp
 t=linspace(0,Nd*Tchirp,Nr*Nd); %total time for samples
-disp(size(t));
-
 
 %Creating the vectors for Tx, Rx and Mix based on the total samples input.
 Tx  = zeros(1,length(t)); %transmitted signal
@@ -109,7 +108,6 @@ signal_fft = signal_fft(1:Nr/2+1);
 figure ('Name','Range from First FFT')
 subplot(2,1,1)
 plot(signal_fft);
-
 xlabel('f [Hz]')
 ylabel('[FFT(f)]')
 axis ([0 200 0 0.5]);
@@ -146,18 +144,17 @@ RDM = 10*log10(RDM) ;
 %dimensions
 doppler_axis = linspace(-100,100,Nd);
 range_axis = linspace(-200,200,Nr/2)*((Nr/2)/400);
-figure,surf(doppler_axis,range_axis,RDM);
+figure(2),surf(doppler_axis,range_axis,RDM);
 xlabel("Velocity")
 ylabel("Range")
 zlabel("f [Hz]")
 title("Range-Doppler Plot")
 
 %% CFAR implementation
-clc;
 %Slide Window through the complete Range Doppler Map
 
 %Select the number of Training Cells in both the dimensions.
-Tr = 10;
+Tr = 8;
 Td = 8;
 
 %Select the number of Guard Cells in both dimensions around the Cell under 
@@ -167,7 +164,7 @@ Gd = 4 ;
 n_TrainCells = (2*(Td+Gd+1)*2*(Tr+Gr+1)-(Gr*Gd)-1);
 
 % offset the threshold by SNR value in dB
-offset = 6;
+offset = 2;
 
 %Create a vector to store noise_level for each iteration on training cells
 noise_level = zeros(1,1);
@@ -182,38 +179,41 @@ noise_level = zeros(1,1);
 %signal under CUT with this threshold. If the CUT level > threshold assign
 %it a value of 1, else equate it to 0.
 
-
 % Use RDM[x,y] as the matrix from the output of 2D FFT for implementing
 % CFAR
+%
 
-for i = Tr + (Gr+1) : Nr - (Gr+Tr)
+% normalized the RDM
+RDM = RDM/max(max(RDM));
+CUT = zeros(size(RDM,1),size(RDM,2));
+for i = Tr + (Gr+1) : Nr/2 - (Gr+Tr)
     for j = Td + (Gd+1) : Nd- (Gd+Td)
-        % Grid Size: (2Tr + 2Gr + 1) * (2Td+ 2Gd +1)
-        for p = i - (Tr+Gr) : i + (Tr+Gr)
-            for q = j - (Td+Gd) : j - (Td+Gd)
-                %Summing All Cells in Training except Guard Band and CUT
-                if (abs(i-p)>Gr || abs (j-q)>Gd)
-                    noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
-                   
-                end
-            end
-        end
-        % Average the noise_level over all training band
-       threshold = pow2db(noise_level/n_TrainCells)
+       noise_level = zeros(1,1);
+       % Grid Size: (2Tr + 2Gr + 1) * (2Td+ 2Gd +1)
+       for p = (i-Tr-Gr) : (i+Tr+Gr)
+           for q = j - (Td + Gd) : j + (Gd + Td)
+               %Summing All Cells in Training except Guard Band and CUT
+               if (abs(p-i)>Gr || abs (q-j)>Gd)
+                   noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
+                  
+               end
+           end
+       end
+       
+       % Average the noise_level over all training band
+       threshold = pow2db(noise_level/n_TrainCells);
        % Add the SNR offset to the threshold 
        threshold = threshold + offset;
        % Measure the signal cell in Cell Under Test (CUT) and compare
        % against threshold 
-       CUT=RDM(i,j);
-       if (CUT<threshold)
-           RDM(i,j) = 0;
+       if(RDM(i,j)<threshold)
+           CUT(i,j) = 0;
        else
-           RDM(i,j) = 1;
+           CUT(i,j) = 1;
        end
-        noise_level = zeros(1,1);
     end
 end
-              
+%Select the number of Training Cells in both the dimensions.       
                     
 % The process above will generate a thresholded block, which is smaller 
 % than the Range Doppler Map as the CUT cannot be located at the edges of
@@ -230,9 +230,14 @@ end
 
 %display the CFAR output using the Surf function like we did for Range
 %Doppler Response output.
-figure,surf(doppler_axis,range_axis,RDM);
+figure(3),surf(doppler_axis,range_axis,RDM);
 colorbar;
 
+doppler_axis = linspace(-100,100,Nd);
+range_axis = linspace(-200,200,Nr/2)*((Nr/2)/400);
+xlabel("Velocity")
+ylabel("Range")
+zlabel("f [Hz]")
+title("CFAR applied to RDM")
 
- 
- 
+
