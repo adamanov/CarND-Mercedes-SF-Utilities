@@ -3,6 +3,8 @@
 ---
 Description of radar-target-generation-and-detection.m file. The project was done during Nanodegree on Sensor Fusion.
 
+<img src="images/project_outline.png" width="640" height="380" />
+
 #### 1. FMCW Waveform Design
 
 Using the given system requirements, design a FMCW waveform. Find its Bandwidth (B), chirp time (Tchirp) and slope of the chirp.
