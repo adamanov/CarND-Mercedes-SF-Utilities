@@ -93,7 +93,7 @@ signal_fft = abs(signal_fft)./Nr;
 signal_fft = signal_fft(1:Nr/2+1);
 
 ```
-<img src="images/range_fft.png" width="820" height="248" />
+<img src="images/range_fft.png" width="248" height="248" />
 #### 3. Doppled FFT (FFT2)
 
 Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
@@ -112,7 +112,7 @@ sig_fft2 = fftshift (sig_fft2);
 RDM = abs(sig_fft2);
 RDM = 10*log10(RDM) 
 ```
-<img src="images/doppler_fft.png" width="820" height="248" />
+<img src="images/doppler_fft.png" width="248" height="248" />
 
 
 #### 4. CFAR Implementation 
@@ -164,7 +164,7 @@ else
    RDM(i,j) = 1;
 end
 ```
-<img src="images/cfar.png" width="820" height="248" />
+<img src="images/cfar.png" width="248" height="248" />
 
 
 
