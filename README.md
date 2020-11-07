@@ -143,5 +143,23 @@ for i = Tr + (Gr+1) : Nr - (Gr+Tr)
 ```Matlab
 noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
 ```
+-   Average the summed values for all of the training cells used. After averaging convert it back to logarithmic using pow2db.
+```Matlab
+threshold = pow2db(noise_level/n_TrainCells)
+```
+-   Further add the (SNR) offset to it to determine the threshold. 
+```Matlab
+threshold = threshold + offset;
+```
+-   Next, compare the signal under CUT against this threshold.
+    If the CUT level > threshold assign it a value of 1, else equate it to 0.
+```Matlab
+CUT=RDM(i,j);
+if (CUT<threshold)
+   RDM(i,j) = 0;
+else
+   RDM(i,j) = 1;
+end
+```
 
 
