@@ -138,7 +138,7 @@ for i = Tr + (Gr+1) : Nr - (Gr+Tr)
                 if (abs(i-p)>Gr || abs (j-q)>Gd)
                 ...
 ```
--   For every iteration sum the signal level within all the training cells. To sum convert the value from logarithmic to linear using db2pow function.
+-   For every iteration sum the signal level within all the training cells. 
 
 ```Matlab
 noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
