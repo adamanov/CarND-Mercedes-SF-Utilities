@@ -122,7 +122,7 @@ RDM = 10*log10(RDM)
 -   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
 ```Matlab
 %Select the number of Training Cells in both the dimensions.
-Tr = 10;
+Tr = 8;
 Td = 8;
 
 %Select the number of Guard Cells in both dimensions around the Cell under 
@@ -135,7 +135,7 @@ n_TrainCells = (2*(Td+Gd+1)*2*(Tr+Gr+1)-(Gr*Gd)-1);
 
 ```Matlab
 
-for i = Tr + (Gr+1) : Nr - (Gr+Tr)
+for i = Tr + (Gr+1) : Nr/2 - (Gr+Tr)
     for j = Td + (Gd+1) : Nd- (Gd+Td)
         % Grid Size: (2Tr + 2Gr + 1) * (2Td+ 2Gd +1)
         for p = i - (Tr+Gr) : i + (Tr+Gr)
@@ -159,11 +159,10 @@ threshold = threshold + offset;
 -   Next, compare the signal under CUT against this threshold.
     If the CUT level > threshold assign it a value of 1, else equate it to 0.
 ```Matlab
-CUT=RDM(i,j);
-if (CUT<threshold)
-   RDM(i,j) = 0;
+if(RDM(i,j)<threshold)
+    CUT(i,j) = 0;
 else
-   RDM(i,j) = 1;
+    CUT(i,j) = 1;
 end
 ```
 <img src="images/cfar.png" width="320" height="248" />
