@@ -2,6 +2,7 @@
 ## [Rubric](https://review.udacity.com/#!/rubrics/2548/view) Points
 ---
 #### 1. FMCW Waveform Design
+
 Using the given system requirements, design a FMCW waveform. Find its Bandwidth (B), chirp time (Tchirp) and slope of the chirp.
 
 ```Matlab
@@ -32,6 +33,7 @@ Bandwidth = c/(2*d_res);
 Slope = Bandwidth/Tchirp;
 ```
 #### 2. Simulation Loop
+
 Simulate Target movement and calculate the beat or mixed signal for every timestamp.
 
 ```Matlab
@@ -51,17 +53,15 @@ Mix = zeros(1,length(t)); %beat signal
 r_t = zeros(1,length(t));
 td  = zeros(1,length(t));
 for i=1:length(t)          
-    % *%TODO* :
     %For each time stamp update the Range of the Target for constant velocity. 
     r_t(i) = R_Target + v_Traget*t(i);
     tau(i) = (2*r_t(i))/c;
-    % *%TODO* :
+    
     %For each time sample we need update the transmitted and
     %received signal. 
     Tx(i)  = cos(2*pi * (fc*t(i) +Slope*(t(i)^2) / 2));
     Rx(i) = cos(2*pi * (fc*(t(i)-tau(i)) + 0.5*Slope*(t(i)-tau(i))^2));
     
-    % *%TODO* :
     %Now by mixing the Transmit and Receive generate the beat signal
     %This is done by element wise matrix multiplication of Transmit and
     %Receiver Signal
@@ -69,4 +69,79 @@ for i=1:length(t)
     
 end
 ```
+
+#### 3. Range FFT (1st FFT)
+
+Implement the Range FFT on the Beat or Mixed Signal and plot the result.
+
+```Matlab
+%% RANGE MEASUREMENT
+
+%reshape the vector into Nr*Nd array. Nr and Nd here would also define the size of
+%Range and Doppler FFT respectively.
+Mix = reshape(Mix,[Nr,Nd]);
+
+%run the FFT on the beat signal along the range bins dimension (Nr) and
+%normalize.
+signal_fft = fft(Mix,Nr);
+
+% Take the absolute value of FFT output
+signal_fft = abs(signal_fft)./Nr;
+
+% Output of FFT is double sided signal, but we are interested in only one side of the spectrum.
+% Hence we throw out half of the samples.
+signal_fft = signal_fft(1:Nr/2+1);
+
+```
+#### 3. Doppled FFT (FFT2)
+
+Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
+
+```Matlab
+% 2D FFT using the FFT size for both dimensions.
+sig_fft2 = fft2(Mix,Nr,Nd);
+
+% Taking just one side of signal from Range dimension.
+sig_fft2 = sig_fft2(1:Nr/2,1:Nd);
+
+% Shift the zero-frequency component to the center of the output
+sig_fft2 = fftshift (sig_fft2);
+
+%Generate a Range Doppler Map 
+RDM = abs(sig_fft2);
+RDM = 10*log10(RDM) 
+```
+
+#### 4. CFAR Implementation 
+
+-   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
+```Matlab
+%Select the number of Training Cells in both the dimensions.
+Tr = 10;
+Td = 8;
+
+%Select the number of Guard Cells in both dimensions around the Cell under 
+%test (CUT) for accurate estimation
+Gr = 4 ;
+Gd = 4 ;
+n_TrainCells = (2*(Td+Gd+1)*2*(Tr+Gr+1)-(Gr*Gd)-1);
+```
+-   Slide the cell under test across the complete matrix. Make sure the CUT has margin for Training and Guard cells from the edges.
+
+```Matlab
+
+for i = Tr + (Gr+1) : Nr - (Gr+Tr)
+    for j = Td + (Gd+1) : Nd- (Gd+Td)
+        % Grid Size: (2Tr + 2Gr + 1) * (2Td+ 2Gd +1)
+        for p = i - (Tr+Gr) : i + (Tr+Gr)
+            for q = j - (Td+Gd) : j - (Td+Gd)
+                if (abs(i-p)>Gr || abs (j-q)>Gd)
+                ...
+```
+-   For every iteration sum the signal level within all the training cells. To sum convert the value from logarithmic to linear using db2pow function.
+
+```Matlab
+noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
+```
+
 
