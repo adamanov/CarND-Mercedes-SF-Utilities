@@ -5,6 +5,7 @@
 Using the given system requirements, design a FMCW waveform. Find its Bandwidth (B), chirp time (Tchirp) and slope of the chirp.
 %% Radar Specifications 
 
+```Matlab
 % Frequency of operation = 77GHz
 % Max Range = 200m
 % Range Resolution = 1 m
@@ -29,3 +30,4 @@ Bandwidth = c/(2*d_res);
 
 % The slope of the chirp
 Slope = Bandwidth/Tchirp;
+```
