@@ -98,6 +98,7 @@ signal_fft = signal_fft(1:Nr/2+1);
 
 ```
 <img src="images/range_fft.png" width="320" height="248" />
+
 #### 4. Doppled FFT (FFT2)
 
 Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
