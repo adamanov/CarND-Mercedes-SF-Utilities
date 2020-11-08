@@ -138,7 +138,7 @@ RDM = 10*log10(RDM)
 
 The false alarm issue can be resolved by implementing the constant false alarm rate. CFAR varies the detection threshold based on the vehicle surroundings. The CFAR technique estimates the level of interference in radar range and doppler cells “Training Cells” on either or both the side of the “Cell Under Test”. The estimate is then used to decide if the target is in the Cell Under Test (CUT).
 
--   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
++   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
 
 <img src="images/fft2d.png" width="480" height="320" />
 
