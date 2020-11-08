@@ -100,6 +100,7 @@ signal_fft = signal_fft(1:Nr/2+1);
 <img src="images/range_fft.png" width="320" height="248" />
 
 #### 4. Doppled FFT (FFT2)
+Calculation of velocity of target obstacles. 
 
 Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
 
@@ -121,6 +122,9 @@ RDM = 10*log10(RDM)
 
 
 #### 5. CFAR Implementation 
+<img src="images/cfar_plot.png" width="320" height="248" />
+
+The false alarm issue can be resolved by implementing the constant false alarm rate. CFAR varies the detection threshold based on the vehicle surroundings. The CFAR technique estimates the level of interference in radar range and doppler cells “Training Cells” on either or both the side of the “Cell Under Test”. The estimate is then used to decide if the target is in the Cell Under Test (CUT).
 
 -   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
 ```Matlab
@@ -168,7 +172,16 @@ else
     CUT(i,j) = 1;
 end
 ```
-<img src="images/cfar.png" width="320" height="248" />
+<img src="images/cfar_to_rdm2.png" width="320" height="248" />
 
 
+```
+An addition, there are multiple categories of CFAR:
+
+-   Cell Averaging CFAR (CA-CFAR)
+-   Ordered Statistics CFAR (OS CFAR)
+-   Maximum Minimum Statistic (MAMIS CFAR)
+-   And, multiple variants of CA-CFAR.
+
+```
 
