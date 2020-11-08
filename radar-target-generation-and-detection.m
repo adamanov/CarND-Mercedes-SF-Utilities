@@ -154,17 +154,17 @@ title("Range-Doppler Plot")
 %Slide Window through the complete Range Doppler Map
 
 %Select the number of Training Cells in both the dimensions.
-Tr = 8;
+Tr = 12;
 Td = 8;
 
 %Select the number of Guard Cells in both dimensions around the Cell under 
 %test (CUT) for accurate estimation
-Gr = 4 ;
-Gd = 4 ;
+Gr = 4;
+Gd = 4;
 n_TrainCells = (2*(Td+Gd+1)*2*(Tr+Gr+1)-(Gr*Gd)-1);
 
 % offset the threshold by SNR value in dB
-offset = 2;
+offset = 1.2;
 
 %Create a vector to store noise_level for each iteration on training cells
 noise_level = zeros(1,1);
@@ -194,8 +194,7 @@ for i = Tr + (Gr+1) : Nr/2 - (Gr+Tr)
            for q = j - (Td + Gd) : j + (Gd + Td)
                %Summing All Cells in Training except Guard Band and CUT
                if (abs(p-i)>Gr || abs (q-j)>Gd)
-                   noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear
-                  
+                   noise_level = noise_level + db2pow(RDM(p,q)); % db2pow convert log to linear           
                end
            end
        end
@@ -207,9 +206,9 @@ for i = Tr + (Gr+1) : Nr/2 - (Gr+Tr)
        % Measure the signal cell in Cell Under Test (CUT) and compare
        % against threshold 
        if(RDM(i,j)<threshold)
-           CUT(i,j) = 0;
+           RDM(i,j) = 0;
        else
-           CUT(i,j) = 1;
+           RDM(i,j) = 1;
        end
     end
 end
@@ -229,7 +228,7 @@ for i = 1 : Nr/2
 end
 
 %display the CFAR output using the Surf function like we did for Range
-%Doppler Response output.
+%Doppler Response outp	ut.
 figure(3),surf(doppler_axis,range_axis,RDM);
 colorbar;
 
