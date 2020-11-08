@@ -98,7 +98,7 @@ signal_fft = signal_fft(1:Nr/2+1);
 
 ```
 <img src="images/range_fft.png" width="320" height="248" />
-#### 3. Doppled FFT (FFT2)
+#### 4. Doppled FFT (FFT2)
 
 Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
 
@@ -119,7 +119,7 @@ RDM = 10*log10(RDM)
 <img src="images/doppler_fft.png" width="320" height="248" />
 
 
-#### 4. CFAR Implementation 
+#### 5. CFAR Implementation 
 
 -   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
 ```Matlab
