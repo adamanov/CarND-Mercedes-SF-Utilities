@@ -129,13 +129,16 @@ The false alarm issue can be resolved by implementing the constant false alarm r
 -   Determine the number of Training cells for each dimension. Similarly, pick the number of guard cells.
 ```Matlab
 %Select the number of Training Cells in both the dimensions.
-Tr = 8;
+Tr = 12;
 Td = 8;
 
 %Select the number of Guard Cells in both dimensions around the Cell under 
 %test (CUT) for accurate estimation
 Gr = 4 ;
 Gd = 4 ;
+% offset the threshold by SNR value in dB
+offset = 1.2;
+
 n_TrainCells = (2*(Td+Gd+1)*2*(Tr+Gr+1)-(Gr*Gd)-1);
 ```
 -   Slide the cell under test across the complete matrix. Make sure the CUT has margin for Training and Guard cells from the edges.
@@ -167,21 +170,21 @@ threshold = threshold + offset;
     If the CUT level > threshold assign it a value of 1, else equate it to 0.
 ```Matlab
 if(RDM(i,j)<threshold)
-    CUT(i,j) = 0;
+    RDM(i,j) = 0;
 else
-    CUT(i,j) = 1;
+    RDM(i,j) = 1;
 end
 ```
 <img src="images/cfar_to_rdm2.png" width="320" height="248" />
 
 
-```
-An addition, there are multiple categories of CFAR:
+
+### An addition, there are multiple categories of CFAR:
 
 -   Cell Averaging CFAR (CA-CFAR)
 -   Ordered Statistics CFAR (OS CFAR)
 -   Maximum Minimum Statistic (MAMIS CFAR)
 -   And, multiple variants of CA-CFAR.
 
-```
+
 
