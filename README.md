@@ -75,6 +75,14 @@ end
 ```
 
 #### 3. Range FFT (1st FFT)
+<img src="images/signal_trip_time.png" width="320" height="248" />
+Radar determines the range of the target by measuring the trip time of the electromagnetic signal it radiates. 
+It is known that EM wave travels at a known speed (300,000,000 m/s), so to determine the range the radar needs to calculate the trip time.
+-> By measuring the shift in the frequency.
+
+<img src="images/range_estimation_equation.png" width="320" height="248" />
+The FMCW waveform has the characteristic that the frequency varies linearly with time. If radar can determine the delta between the received frequency and hardware’s continuously ramping frequency then it can calculate the trip time and hence the range
+
 
 Implement the Range FFT on the Beat or Mixed Signal and plot the result.
 
@@ -99,7 +107,14 @@ signal_fft = signal_fft(1:Nr/2+1);
 ```
 
 #### 4. Doppled FFT (FFT2)
+<img src="images/cfar_plot.png" width="320" height="248" />
+
+The velocity estimation for radar is based on an age old phenomenon called the doppler effect. As per doppler theory an approaching target will shift an emitted and reflected frequency higher, whereas a receding target will shift the both frequencies to be lower than the transmitted frequency. 
 Calculation of velocity of target obstacles. 
+
+<img src="images/doppler_measurement.png" width="320" height="248" />
+
+By measuring the shift in the frequency due to doppler, radar can determine the velocity. The receding target will have a negative velocity due to the frequency dropping lower, whereas the approaching target will have positive velocity as the frequency shifts higher.
 
 Implement the 2D CFAR process on the output of 2D FFT operation, i.e the Range Doppler Map.
 
@@ -119,7 +134,7 @@ RDM = 10*log10(RDM)
 ```
 
 #### 5. CFAR Implementation 
-<img src="images/cfar_plot.png" width="320" height="248" />
+<img src="images/doppler_effect.png" width="320" height="248" />
 
 The false alarm issue can be resolved by implementing the constant false alarm rate. CFAR varies the detection threshold based on the vehicle surroundings. The CFAR technique estimates the level of interference in radar range and doppler cells “Training Cells” on either or both the side of the “Cell Under Test”. The estimate is then used to decide if the target is in the Cell Under Test (CUT).
 
