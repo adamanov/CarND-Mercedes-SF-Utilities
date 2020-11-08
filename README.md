@@ -40,7 +40,7 @@ Slope = Bandwidth/Tchirp;
 <img src="images/signal_trip_time.png" width="440" height="320" />
 Radar determines the range of the target by measuring the trip time of the electromagnetic signal it radiates. 
 It is known that EM wave travels at a known speed (300,000,000 m/s), so to determine the range the radar needs to calculate the trip time.
--> By measuring the shift in the frequency, and converting them into beat signal, in order to process in a fft.
+-   By measuring the shift in the frequency, and converting them into beat signal, in order to process in a fft.
 
 Simulate Target movement and calculate the beat or mixed signal for every timestamp.
 
