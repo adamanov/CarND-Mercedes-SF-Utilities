@@ -107,7 +107,7 @@ signal_fft = signal_fft(1:Nr/2+1);
 ```
 
 #### 4. Doppled FFT (FFT2)
-<img src="images/cfar_plot.png" width="320" height="248" />
+<img src="images/doppler_effect.png" width="320" height="248" />
 
 The velocity estimation for radar is based on an age old phenomenon called the doppler effect. As per doppler theory an approaching target will shift an emitted and reflected frequency higher, whereas a receding target will shift the both frequencies to be lower than the transmitted frequency. 
 Calculation of velocity of target obstacles. 
@@ -134,7 +134,7 @@ RDM = 10*log10(RDM)
 ```
 
 #### 5. CFAR Implementation 
-<img src="images/doppler_effect.png" width="320" height="248" />
+<img src="images/cfar_plot.png" width="480" height="320" />
 
 The false alarm issue can be resolved by implementing the constant false alarm rate. CFAR varies the detection threshold based on the vehicle surroundings. The CFAR technique estimates the level of interference in radar range and doppler cells “Training Cells” on either or both the side of the “Cell Under Test”. The estimate is then used to decide if the target is in the Cell Under Test (CUT).
 
