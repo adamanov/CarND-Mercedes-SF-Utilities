@@ -37,6 +37,10 @@ Bandwidth = c/(2*d_res);
 Slope = Bandwidth/Tchirp;
 ```
 #### 2. Simulation Loop
+<img src="images/signal_trip_time.png" width="440" height="320" />
+Radar determines the range of the target by measuring the trip time of the electromagnetic signal it radiates. 
+It is known that EM wave travels at a known speed (300,000,000 m/s), so to determine the range the radar needs to calculate the trip time.
+-> By measuring the shift in the frequency, and converting them into beat signal, in order to process in a fft.
 
 Simulate Target movement and calculate the beat or mixed signal for every timestamp.
 
@@ -75,10 +79,6 @@ end
 ```
 
 #### 3. Range FFT (1st FFT)
-<img src="images/signal_trip_time.png" width="440" height="320" />
-Radar determines the range of the target by measuring the trip time of the electromagnetic signal it radiates. 
-It is known that EM wave travels at a known speed (300,000,000 m/s), so to determine the range the radar needs to calculate the trip time.
--> By measuring the shift in the frequency.
 
 <img src="images/range_estimation_equation.png" width="440" height="320" />
 The FMCW waveform has the characteristic that the frequency varies linearly with time. If radar can determine the delta between the received frequency and hardware’s continuously ramping frequency then it can calculate the trip time and hence the range
