@@ -97,7 +97,6 @@ signal_fft = abs(signal_fft)./Nr;
 signal_fft = signal_fft(1:Nr/2+1);
 
 ```
-<img src="images/range_fft.png" width="320" height="248" />
 
 #### 4. Doppled FFT (FFT2)
 Calculation of velocity of target obstacles. 
@@ -118,8 +117,6 @@ sig_fft2 = fftshift (sig_fft2);
 RDM = abs(sig_fft2);
 RDM = 10*log10(RDM) 
 ```
-<img src="images/doppler_fft.png" width="320" height="248" />
-
 
 #### 5. CFAR Implementation 
 <img src="images/cfar_plot.png" width="320" height="248" />
@@ -175,8 +172,6 @@ else
     RDM(i,j) = 1;
 end
 ```
-<img src="images/cfar_to_rdm2.png" width="320" height="248" />
-
 
 
 ### An addition, there are multiple categories of CFAR:
