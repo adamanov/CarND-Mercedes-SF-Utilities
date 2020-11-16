@@ -206,4 +206,5 @@ end
 -   [FMCW Radar](https://www.youtube.com/playlist?list=PLJAlx-5DOdeMNjpg4sRO6cty3gL_PZeCE)
 -   [Automotive Adaptive Cruise Control Using FMCW Technology](https://ch.mathworks.com/help/phased/ug/automotive-adaptive-cruise-control-using-fmcw-technology.html)
 -   [MATLAB Automated Driving](https://ch.mathworks.com/products/automated-driving.html)
+-   [Radar Tutorial](https://www.radartutorial.eu/01.basics/Radar%20Principle.en.html)
 -   [Kalman Filter Basics](https://www.youtube.com/playlist?list=PLn8PRpmsu08pzi6EMiYnR-076Mh-q3tWr)
