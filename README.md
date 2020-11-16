@@ -202,6 +202,7 @@ end
 
 
 ### References
+-   [Fourier transform, in 1D and in 2D](http://people.ciirc.cvut.cz/~hlavac/TeachPresEn/11ImageProc/12FourierTxEn.pdf)
 -   [FMCW Radar](https://www.youtube.com/playlist?list=PLJAlx-5DOdeMNjpg4sRO6cty3gL_PZeCE)
 -   [Automotive Adaptive Cruise Control Using FMCW Technology](https://ch.mathworks.com/help/phased/ug/automotive-adaptive-cruise-control-using-fmcw-technology.html)
 -   [MATLAB Automated Driving](https://ch.mathworks.com/products/automated-driving.html)
